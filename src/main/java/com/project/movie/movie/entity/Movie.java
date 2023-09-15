@@ -1,13 +1,16 @@
 package com.project.movie.movie.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +41,6 @@ public class Movie {
     private String movieContent;
 
     @Column(name = "movie_release_date", nullable = false)
-    private LocalDateTime movieReleaseDate;
+    private String movieReleaseDate;
 
 }
