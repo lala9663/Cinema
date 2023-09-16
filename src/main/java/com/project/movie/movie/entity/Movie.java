@@ -1,9 +1,11 @@
 package com.project.movie.movie.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie")
@@ -42,5 +44,10 @@ public class Movie {
 
     @Column(name = "movie_release_date", nullable = false)
     private String movieReleaseDate;
+    @Column(name = "movie_deleted", nullable = false)
+    private boolean movieDeleted;
 
+    public void markAsDeleted() {
+        this.movieDeleted = true;
+    }
 }

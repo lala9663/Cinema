@@ -32,17 +32,4 @@ public class RegisterMovieDto {
                 .build();
     }
 
-    @Builder
-    public RegisterMovieDto(String movieTitle, MovieGenre movieGenre, MovieRate movieRate, String movieDirector, String movieActor,
-                            String movieRunningTime, String movieContent, String movieReleaseDate) {
-        this.movieTitle = movieTitle;
-        this.movieGenre = movieGenre;
-        this.movieRate = movieRate;
-        this.movieDirector = movieDirector;
-        this.movieActor = movieActor;
-        this.movieRunningTime = movieRunningTime;
-        this.movieContent = movieContent;
-        this.movieReleaseDate = movieReleaseDate;
-    }
-
 }
