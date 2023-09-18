@@ -1,5 +1,6 @@
 package com.project.movie.movie.entity;
 
+import com.project.movie.movie.dto.request.UpdateMovieDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,5 +50,31 @@ public class Movie {
 
     public void markAsDeleted() {
         this.movieDeleted = true;
+    }
+    public void updateFrom(UpdateMovieDto updateMovieDto) {
+        if (updateMovieDto.getMovieTitle() != null) {
+            this.movieTitle = updateMovieDto.getMovieTitle();
+        }
+        if (updateMovieDto.getMovieGenre() != null) {
+            this.movieGenre = updateMovieDto.getMovieGenre();
+        }
+        if (updateMovieDto.getMovieRate() != null) {
+            this.movieRate = updateMovieDto.getMovieRate();
+        }
+        if (updateMovieDto.getMovieDirector() != null) {
+            this.movieDirector = updateMovieDto.getMovieDirector();
+        }
+        if (updateMovieDto.getMovieActor() != null) {
+            this.movieActor = updateMovieDto.getMovieActor();
+        }
+        if (updateMovieDto.getMovieRunningTime() != null) {
+            this.movieRunningTime = updateMovieDto.getMovieRunningTime();
+        }
+        if (updateMovieDto.getMovieContent() != null) {
+            this.movieContent = updateMovieDto.getMovieContent();
+        }
+        if (updateMovieDto.getMovieReleaseDate() != null) {
+            this.movieReleaseDate = updateMovieDto.getMovieReleaseDate();
+        }
     }
 }

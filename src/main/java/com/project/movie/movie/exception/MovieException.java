@@ -4,9 +4,17 @@ public class MovieException extends RuntimeException {
     public MovieException(String message) {
         super(message);
     }
+    public static MovieException failRegisterException() {
+        return new MovieException("Failed to register the movie");
+    }
 
-    public static MovieException deleteException(long movieId){
-        return new MovieException("해당 영화 ID " + movieId + " 는 존재하지 않습니다.");
+
+    public static MovieException movieAlreadyDeletedException(long movieId) {
+        return new MovieException("Movie with ID " + movieId + " is already deleted");
+    }
+
+    public static MovieException movieNotFoundException(long movieId) {
+        return new MovieException("Movie with ID " + movieId + " not found");
     }
 
 }

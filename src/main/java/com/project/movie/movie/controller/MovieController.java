@@ -1,7 +1,9 @@
 package com.project.movie.movie.controller;
 
 import com.project.movie.movie.dto.request.RegisterMovieDto;
+import com.project.movie.movie.dto.request.UpdateMovieDto;
 import com.project.movie.movie.entity.Movie;
+import com.project.movie.movie.exception.MovieException;
 import com.project.movie.movie.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -44,7 +46,7 @@ public class MovieController {
         List<Movie> movies = movieService.getAllMovies();
         return ResponseEntity.ok(movies);
     }
-    @PutMapping("/{movieId}")
+    @DeleteMapping("/{movieId}")
     public ResponseEntity<String> deleteMovie(@PathVariable Long movieId) {
         try {
             movieService.deleteMovie(movieId);
@@ -55,5 +57,19 @@ public class MovieController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the movie");
         }
     }
+    @PutMapping("/{movieId}")
+    public ResponseEntity<String> updateMovie(
+            @PathVariable Long movieId,
+            @RequestBody UpdateMovieDto updateMovieDto) {
+        try {
+            movieService.updateMovie(movieId, updateMovieDto);
+            return ResponseEntity.ok("Movie updated successfully.");
+        } catch (MovieException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Movie not found with ID: " + movieId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update movie.");
+        }
+    }
+
 }
 
