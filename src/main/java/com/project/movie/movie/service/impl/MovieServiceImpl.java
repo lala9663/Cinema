@@ -2,6 +2,7 @@ package com.project.movie.movie.service.impl;
 
 import com.project.movie.movie.dto.request.RegisterMovieDto;
 import com.project.movie.movie.entity.Movie;
+import com.project.movie.movie.exception.MovieException;
 import com.project.movie.movie.repository.MovieRepository;
 import com.project.movie.movie.service.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
 
-    public Long registerMovie(RegisterMovieDto registerMovieDto) {
+    public long registerMovie(RegisterMovieDto registerMovieDto) {
         Movie movie = registerMovieDto.toEntity();
         movieRepository.save(movie);
         Movie savedMovie = movieRepository.save(movie);
@@ -24,7 +25,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getMovieById(Long id) {
+    public Movie getMovieById(long id) {
 
         return movieRepository.findById(id).orElse(null);
     }
@@ -34,14 +35,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void deleteMovie(Long movieId) {
+    public void deleteMovie(long movieId) {
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
         if (movieOptional.isPresent()) {
             Movie movie = movieOptional.get();
             movie.markAsDeleted();
             movieRepository.save(movie);
         } else {
-
+            throw MovieException.deleteException(movieId);
         }
     }
 }

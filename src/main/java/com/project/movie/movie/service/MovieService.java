@@ -6,9 +6,9 @@ import com.project.movie.movie.entity.Movie;
 import java.util.List;
 
 public interface MovieService {
-    Long registerMovie(RegisterMovieDto registerMovieDto);
-    Movie getMovieById(Long id);
+    long registerMovie(RegisterMovieDto registerMovieDto);
+    Movie getMovieById(long id);
     List<Movie> getAllMovies();
-    void deleteMovie(Long id);
+    void deleteMovie(long id);
 }
 
