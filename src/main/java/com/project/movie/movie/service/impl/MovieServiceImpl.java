@@ -67,13 +67,20 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public long updateMovie(long movieId, UpdateMovieDto updateMovieDto) {
 
-        Movie movie = movieRepository.findById(movieId)
+        Movie movieToUpdate = movieRepository.findUnDeletedMovies()
+                .stream()
+                .filter(movie -> movie.getMovieId().equals(movieId))
+                .findFirst()
                 .orElseThrow(() -> MovieException.movieNotFoundException(movieId));
 
-        movie.updateFrom(updateMovieDto);
+        Movie updatedMovie = updateMovieDto.toEntity();
 
-        Movie updatedMovie = movieRepository.save(movie);
+        movieToUpdate.updateFrom(updatedMovie);
 
-        return updatedMovie.getMovieId();
+        Movie savedMovie = movieRepository.save(movieToUpdate);
+
+        return savedMovie.getMovieId();
     }
+
+
 }

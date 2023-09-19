@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class UpdateMovieDto {
     private String movieTitle;
     private MovieGenre movieGenre;
@@ -19,6 +18,7 @@ public class UpdateMovieDto {
     private String movieContent;
     private String movieReleaseDate;
 
+    @Builder
     public Movie toEntity() {
         return Movie.builder()
                 .movieTitle(this.movieTitle)

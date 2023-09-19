@@ -8,7 +8,6 @@ public class MovieException extends RuntimeException {
         return new MovieException("Failed to register the movie");
     }
 
-
     public static MovieException movieAlreadyDeletedException(long movieId) {
         return new MovieException("Movie with ID " + movieId + " is already deleted");
     }

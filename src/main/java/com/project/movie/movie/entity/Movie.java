@@ -1,6 +1,5 @@
 package com.project.movie.movie.entity;
 
-import com.project.movie.movie.dto.request.UpdateMovieDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,7 +50,7 @@ public class Movie {
     public void markAsDeleted() {
         this.movieDeleted = true;
     }
-    public void updateFrom(UpdateMovieDto updateMovieDto) {
+    public void updateFrom(Movie updateMovieDto) {
         if (updateMovieDto.getMovieTitle() != null) {
             this.movieTitle = updateMovieDto.getMovieTitle();
         }

@@ -11,4 +11,5 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("SELECT m FROM Movie m WHERE m.movieDeleted = false")
     List<Movie> findUnDeletedMovies();
+
 }
