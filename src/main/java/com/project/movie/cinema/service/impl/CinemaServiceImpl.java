@@ -8,6 +8,10 @@ import com.project.movie.cinema.service.CinemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CinemaServiceImpl implements CinemaService {
@@ -23,4 +27,25 @@ public class CinemaServiceImpl implements CinemaService {
             throw CinemaException.failRegisterException();
         }
     }
+    @Override
+    public List<Cinema> allCinemas() {
+        List<Cinema> cinemas = cinemaRepository.findAll();
+        if (!cinemas.isEmpty()) {
+            return cinemas;
+        } else {
+            throw CinemaException.failViewException();
+        }
+    }
+
+    @Override
+    public Cinema getCinemaById(long cinemaId) {
+        Optional<Cinema> cinemaOptional = cinemaRepository.findById(cinemaId);
+        if (cinemaOptional.isPresent()) {
+            Cinema cinema = cinemaOptional.get();
+            return cinema;
+        } else {
+            throw CinemaException.cinemaNotFoundException(cinemaId);
+        }
+    }
+
 }
