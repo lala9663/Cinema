@@ -1,7 +1,9 @@
 package com.project.movie.cinema.controller;
 
 import com.project.movie.cinema.dto.request.RegisterCinemaDto;
+import com.project.movie.cinema.dto.request.UpdateCinemaDto;
 import com.project.movie.cinema.entity.Cinema;
+import com.project.movie.cinema.exception.CinemaException;
 import com.project.movie.cinema.service.CinemaService;
 import com.project.movie.movie.entity.Movie;
 import io.swagger.v3.oas.annotations.Operation;
@@ -65,6 +67,27 @@ public class CinemaController {
             return ResponseEntity.ok(id);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Operation(summary = "영화관 수정", description = "영화관을 수정합니다.", tags = { "Cinema Controller" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PutMapping("/{cinemaId}")
+    public ResponseEntity<String> updateCinema(
+            @PathVariable long cinemaId,
+            @RequestBody UpdateCinemaDto updateCinemaDto) {
+        try {
+            cinemaService.updateCinema(cinemaId, updateCinemaDto);
+            return ResponseEntity.ok("영화관이 수정되었습니다.");
+        } catch (CinemaException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 영화관을 못찾았습니다." + cinemaId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류");
         }
     }
 }

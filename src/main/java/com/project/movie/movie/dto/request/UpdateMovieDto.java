@@ -18,7 +18,6 @@ public class UpdateMovieDto {
     private String movieContent;
     private String movieReleaseDate;
 
-    @Builder
     public Movie toEntity() {
         return Movie.builder()
                 .movieTitle(this.movieTitle)

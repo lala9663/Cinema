@@ -1,6 +1,7 @@
 package com.project.movie.cinema.service.impl;
 
 import com.project.movie.cinema.dto.request.RegisterCinemaDto;
+import com.project.movie.cinema.dto.request.UpdateCinemaDto;
 import com.project.movie.cinema.entity.Cinema;
 import com.project.movie.cinema.exception.CinemaException;
 import com.project.movie.cinema.repository.CinemaRepository;
@@ -47,5 +48,27 @@ public class CinemaServiceImpl implements CinemaService {
             throw CinemaException.cinemaNotFoundException(cinemaId);
         }
     }
+
+    @Override
+    public long updateCinema(long cinemaId, UpdateCinemaDto updateCinemaDto) {
+        Optional<Cinema> cinemaToUpdateOptional = cinemaRepository.findById(cinemaId);
+
+        if (cinemaToUpdateOptional.isPresent()) {
+            Cinema cinemaToUpdate = cinemaToUpdateOptional.get()
+                    .toBuilder()
+                    .cinemaName(updateCinemaDto.getCinemaName())
+                    .cinemaAddress(updateCinemaDto.getCinemaAddress())
+                    .cinemaTheater(updateCinemaDto.getCinemaTheater())
+                    .cinemaParking(updateCinemaDto.isCinemaParking())
+                    .build();
+
+            cinemaRepository.save(cinemaToUpdate);
+
+            return cinemaId;
+        } else {
+            throw CinemaException.failViewException();
+        }
+    }
+
 
 }

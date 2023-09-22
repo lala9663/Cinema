@@ -32,4 +32,13 @@ public class Cinema {
     @Column(name = "cinema_parking", nullable = false)
     private boolean cinemaParking;
 
+    public CinemaBuilder toBuilder() {
+        return builder()
+                .cinemaId(cinemaId)
+                .cinemaName(cinemaName)
+                .cinemaAddress(cinemaAddress)
+                .cinemaTheater(cinemaTheater)
+                .cinemaParking(cinemaParking);
+    }
+
 }
