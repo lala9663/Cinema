@@ -1,12 +1,18 @@
 package com.project.movie.cinema.entity;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cinema")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
 public class Cinema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

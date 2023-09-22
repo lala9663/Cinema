@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>영화 등록</title>
+</head>
+<body>
+<h1>영화 등록</h1>
+
+<form id="movieForm">
+    <label for="movieTitle">영화 제목:</label>
+    <input type="text" id="movieTitle" name="movieTitle" required><br><br>
+
+    <label for="movieGenre">장르:</label>
+    <input type="text" id="movieGenre" name="movieGenre" required><br><br>
+
+    <label for="movieRate">평점:</label>
+    <input type="text" id="movieRate" name="movieRate" required><br><br>
+
+    <label for="movieDirector">감독:</label>
+    <input type="text" id="movieDirector" name="movieDirector" required><br><br>
+
+    <label for="movieActor">배우:</label>
+    <input type="text" id="movieActor" name="movieActor" required><br><br>
+
+    <label for="movieRunningTime">상영 시간:</label>
+    <input type="text" id="movieRunningTime" name="movieRunningTime" required><br><br>
+
+    <label for="movieContent">내용:</label>
+    <textarea id="movieContent" name="movieContent" required></textarea><br><br>
+
+    <label for="movieReleaseDate">개봉일:</label>
+    <input type="text" id="movieReleaseDate" name="movieReleaseDate" required><br><br>
+
+    <button type="button" onclick="registerMovie()">등록</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    function registerMovie() {
+        var formData = new FormData(document.getElementById("movieForm"));
+
+        fetch("/api/v1/movies", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.movieId) {
+                    document.getElementById("result").innerText = "영화가 성공적으로 등록되었습니다. 영화 ID: " + data.movieId;
+                } else {
+                    document.getElementById("result").innerText = "영화 등록에 실패했습니다.";
+                }
+            })
+            .catch(error => {
+                console.error("영화 등록 오류:", error);
+                document.getElementById("result").innerText = "영화 등록 중 오류가 발생했습니다.";
+            });
+    }
+</script>
+</body>
+</html>

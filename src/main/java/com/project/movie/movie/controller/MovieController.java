@@ -6,8 +6,6 @@ import com.project.movie.movie.entity.Movie;
 import com.project.movie.movie.exception.MovieException;
 import com.project.movie.movie.service.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +33,7 @@ public class MovieController {
     @PostMapping("/register")
     public ResponseEntity<?> registerMovie(@RequestBody RegisterMovieDto registerMovieDto) {
         try {
-            Long movieId = movieService.registerMovie(registerMovieDto);
+            long movieId = movieService.registerMovie(registerMovieDto);
             return ResponseEntity.ok("영화가 등록되었습니다. 영화 ID는 " + movieId + " 입니다.");
         } catch (DataAccessException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("등록 실패 했습니다.");

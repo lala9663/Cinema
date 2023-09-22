@@ -6,7 +6,6 @@ import com.project.movie.movie.entity.MovieRate;
 import lombok.*;
 
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
 public class RegisterMovieDto {
