@@ -17,4 +17,16 @@ public class CinemaException extends RuntimeException {
     public static CinemaException cinemaNotFoundException(long cinemaId) {
         return new CinemaException("해당 영화관 " + cinemaId + " 는 찾을 수 없습니다.");
     }
+    public static CinemaException duplicateCinemaException() {
+        return new CinemaException("이미 등록된 영화관입니다.");
+    }
+    public static CinemaException cinemaDeletionException(long cinemaId) {
+        return new CinemaException("영화관 삭제 중 오류가 발생했습니다. Cinema ID: " + cinemaId);
+    }
+    public static CinemaException cinemaUpdateException(long cinemaId) {
+        return new CinemaException("영화관 수정 중 오류가 발생했습니다. Cinema ID: " + cinemaId);
+    }
+    public static CinemaException cinemaRegisterException() {
+        return new CinemaException("영화관 생성 중 오류가 발생했습니다. Cinema ID: ");
+    }
 }
