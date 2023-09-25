@@ -2,6 +2,7 @@ package com.project.movie.cinema.service;
 
 import com.project.movie.cinema.dto.request.DeleteCinemaDto;
 import com.project.movie.cinema.dto.request.RegisterCinemaDto;
+import com.project.movie.cinema.dto.request.RegisterMovieTimeDto;
 import com.project.movie.cinema.dto.request.UpdateCinemaDto;
 import com.project.movie.cinema.entity.Cinema;
 
@@ -13,4 +14,5 @@ public interface CinemaService {
     Cinema getCinemaById(long cinemaId);
     long updateCinema(long cinemaId, UpdateCinemaDto updateCinemaDto);
     void deleteCinema(DeleteCinemaDto deleteCinemaDto);
+    long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto);
 }

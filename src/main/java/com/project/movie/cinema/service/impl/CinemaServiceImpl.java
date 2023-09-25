@@ -2,11 +2,17 @@ package com.project.movie.cinema.service.impl;
 
 import com.project.movie.cinema.dto.request.DeleteCinemaDto;
 import com.project.movie.cinema.dto.request.RegisterCinemaDto;
+import com.project.movie.cinema.dto.request.RegisterMovieTimeDto;
 import com.project.movie.cinema.dto.request.UpdateCinemaDto;
 import com.project.movie.cinema.entity.Cinema;
+import com.project.movie.cinema.entity.MovieTime;
 import com.project.movie.cinema.exception.CinemaException;
 import com.project.movie.cinema.repository.CinemaRepository;
+import com.project.movie.cinema.repository.MovieTimeRepository;
 import com.project.movie.cinema.service.CinemaService;
+import com.project.movie.movie.entity.Movie;
+import com.project.movie.movie.exception.MovieException;
+import com.project.movie.movie.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +25,8 @@ import java.util.Optional;
 @Slf4j
 public class CinemaServiceImpl implements CinemaService {
     private final CinemaRepository cinemaRepository;
+    private final MovieRepository movieRepository;
+    private final MovieTimeRepository movieTimeRepository;
     @Override
     public long registerCinema(RegisterCinemaDto registerCinemaDto) {
         try {
@@ -111,7 +119,7 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public void deleteCinema(DeleteCinemaDto deleteCinemaDto) {
-        Long cinemaId = deleteCinemaDto.getCinemaId();
+        long cinemaId = deleteCinemaDto.getCinemaId();
         Optional<Cinema> optionalCinema = cinemaRepository.findById(cinemaId);
 
         if (optionalCinema.isPresent()) {
@@ -126,6 +134,21 @@ public class CinemaServiceImpl implements CinemaService {
             // 해당 아이디의 영화관을 찾을 수 없을 때
             throw CinemaException.cinemaNotFoundException(cinemaId);
         }
+    }
+
+    @Override
+    public long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto) {
+        Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> CinemaException.cinemaNotFoundException(cinemaId));
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> MovieException.movieNotFoundException(movieId));
+
+        MovieTime movieTime = registerMovieTimeDto.toEntity();
+
+        movieTime.setCinema(cinema);
+        movieTime.setMovie(movie);
+
+        MovieTime savedMovieTime = movieTimeRepository.save(movieTime);
+
+        return savedMovieTime.getTimeId();
     }
 
 
