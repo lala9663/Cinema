@@ -1,6 +1,5 @@
 package com.project.movie.cinema.controller;
 
-import com.project.movie.cinema.dto.request.RegisterCinemaDto;
 import com.project.movie.cinema.dto.request.RegisterMovieTimeDto;
 import com.project.movie.cinema.service.CinemaService;
 import io.swagger.v3.oas.annotations.Operation;

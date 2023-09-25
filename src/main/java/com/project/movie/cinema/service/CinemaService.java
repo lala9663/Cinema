@@ -14,5 +14,5 @@ public interface CinemaService {
     Cinema getCinemaById(long cinemaId);
     long updateCinema(long cinemaId, UpdateCinemaDto updateCinemaDto);
     void deleteCinema(DeleteCinemaDto deleteCinemaDto);
-    long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto);
+    long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto) throws Exception;
 }

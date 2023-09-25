@@ -6,6 +6,7 @@ import com.project.movie.cinema.dto.request.RegisterMovieTimeDto;
 import com.project.movie.cinema.dto.request.UpdateCinemaDto;
 import com.project.movie.cinema.entity.Cinema;
 import com.project.movie.cinema.entity.MovieTime;
+import com.project.movie.cinema.entity.TheaterType;
 import com.project.movie.cinema.exception.CinemaException;
 import com.project.movie.cinema.repository.CinemaRepository;
 import com.project.movie.cinema.repository.MovieTimeRepository;
@@ -137,9 +138,15 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto) {
+    public long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto) throws Exception {
         Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> CinemaException.cinemaNotFoundException(cinemaId));
         Movie movie = movieRepository.findById(movieId).orElseThrow(() -> MovieException.movieNotFoundException(movieId));
+
+        TheaterType theaterType = registerMovieTimeDto.getTheaterType();
+        if (!cinema.getCinemaTheater().equals(theaterType)) {
+            // 해당 영화관에 해당 상영관이 없을 때
+            throw CinemaException.invalidTheaterTypeException();
+        }
 
         MovieTime movieTime = registerMovieTimeDto.toEntity();
 

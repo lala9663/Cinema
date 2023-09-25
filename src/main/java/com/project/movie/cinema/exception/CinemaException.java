@@ -1,5 +1,6 @@
 package com.project.movie.cinema.exception;
 
+import com.project.movie.cinema.entity.TheaterType;
 import com.project.movie.movie.exception.MovieException;
 
 public class CinemaException extends RuntimeException {
@@ -28,5 +29,9 @@ public class CinemaException extends RuntimeException {
     }
     public static CinemaException cinemaRegisterException() {
         return new CinemaException("영화관 생성 중 오류가 발생했습니다. Cinema ID: ");
+    }
+
+    public static Exception invalidTheaterTypeException() {
+        return new CinemaException("해당 영화관에는 존재하지 않습니다.");
     }
 }

@@ -35,5 +35,8 @@ public class MovieTime {
     @Column(name = "movie_round", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int movieRound;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "theater_type", nullable = false)
+    private TheaterType theaterType;
 
 }
