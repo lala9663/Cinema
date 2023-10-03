@@ -1,8 +1,5 @@
 package com.project.movie.cinema.exception;
 
-import com.project.movie.cinema.entity.TheaterType;
-import com.project.movie.movie.exception.MovieException;
-
 public class CinemaException extends RuntimeException {
     public CinemaException(String message) {
         super(message);

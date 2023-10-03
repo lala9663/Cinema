@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "cinema")
@@ -17,27 +18,25 @@ public class Cinema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cinema_id")
-    private long cinemaId;
+    private Long cinemaId;
 
     @Column(name = "cinema_name", nullable = false)
     private String cinemaName;
 
-    @Column(name = "cinema_addr", nullable = false)
+    @Column(name = "cinema_address", nullable = false)
     private String cinemaAddress;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "cinema_theater", nullable = false)
-    private TheaterType cinemaTheater;
 
     @Column(name = "cinema_parking", nullable = false)
     private boolean cinemaParking;
+
+    @OneToMany(mappedBy = "cinema")
+    private List<Screen> screens;
 
     public CinemaBuilder toBuilder() {
         return builder()
                 .cinemaId(cinemaId)
                 .cinemaName(cinemaName)
                 .cinemaAddress(cinemaAddress)
-                .cinemaTheater(cinemaTheater)
                 .cinemaParking(cinemaParking);
     }
 

@@ -1,12 +1,16 @@
 package com.project.movie.member.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "member")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +31,7 @@ public class Member {
 
     @Column(name = "phone", nullable = false)
     private String phone;
+    @OneToMany(mappedBy = "member")
+    private List<MovieTicket> movieTickets;
 
 }

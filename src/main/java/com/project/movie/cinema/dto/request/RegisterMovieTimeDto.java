@@ -1,8 +1,7 @@
 package com.project.movie.cinema.dto.request;
 
-import com.project.movie.cinema.entity.Cinema;
 import com.project.movie.cinema.entity.MovieTime;
-import com.project.movie.cinema.entity.TheaterType;
+import com.project.movie.cinema.entity.Screen;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,13 +12,13 @@ import java.time.LocalDateTime;
 public class RegisterMovieTimeDto {
     private LocalDateTime movieStart;
     private LocalDateTime movieEnd;
-    private TheaterType theaterType;
+    private Screen screen;
 
     public MovieTime toEntity() {
         return MovieTime.builder()
-                .movieStart(this.movieStart)
-                .movieEnd(this.movieEnd)
-                .theaterType(this.theaterType)
+                .startAt(this.movieStart)
+                .endAt(this.movieEnd)
+                .screen(this.screen)
                 .build();
     }
 }

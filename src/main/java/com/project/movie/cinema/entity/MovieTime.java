@@ -1,42 +1,49 @@
 package com.project.movie.cinema.entity;
 
+import com.project.movie.member.entity.MovieTicket;
 import com.project.movie.movie.entity.Movie;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "movie_time")
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
 @Builder
 public class MovieTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "time_id")
     private Long timeId;
 
     @ManyToOne
-    @JoinColumn(name = "cinema_id", referencedColumnName = "cinema_id", nullable = false)
-    private Cinema cinema;
+    @JoinColumn(name = "screen_id")
+    private Screen screen;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id", nullable = false)
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @Column(name = "movie_start", nullable = false)
+    @Column(name = "movie_start")
     private LocalDateTime movieStart;
-    @Column(name = "movie_end", nullable = false)
-    private LocalDateTime movieEnd;
-    @Column(name = "movie_round", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(name = "movie_round")
     private int movieRound;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "theater_type", nullable = false)
-    private TheaterType theaterType;
+
+    @Column(name = "start_at")
+    private LocalDateTime startAt;
+
+    @Column(name = "end_at")
+    private LocalDateTime endAt;
+    @OneToMany(mappedBy = "movieTime")
+    private List<MovieTicket> movieTickets;
 
 }

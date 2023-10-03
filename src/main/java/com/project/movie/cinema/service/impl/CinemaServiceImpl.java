@@ -6,10 +6,12 @@ import com.project.movie.cinema.dto.request.RegisterMovieTimeDto;
 import com.project.movie.cinema.dto.request.UpdateCinemaDto;
 import com.project.movie.cinema.entity.Cinema;
 import com.project.movie.cinema.entity.MovieTime;
-import com.project.movie.cinema.entity.TheaterType;
+import com.project.movie.cinema.entity.Screen;
+import com.project.movie.cinema.entity.ScreenType;
 import com.project.movie.cinema.exception.CinemaException;
 import com.project.movie.cinema.repository.CinemaRepository;
 import com.project.movie.cinema.repository.MovieTimeRepository;
+import com.project.movie.cinema.repository.ScreenRepository;
 import com.project.movie.cinema.service.CinemaService;
 import com.project.movie.movie.entity.Movie;
 import com.project.movie.movie.exception.MovieException;
@@ -26,6 +28,7 @@ import java.util.Optional;
 @Slf4j
 public class CinemaServiceImpl implements CinemaService {
     private final CinemaRepository cinemaRepository;
+    private final ScreenRepository screenRepository;
     private final MovieRepository movieRepository;
     private final MovieTimeRepository movieTimeRepository;
     @Override
@@ -98,7 +101,6 @@ public class CinemaServiceImpl implements CinemaService {
             cinemaToUpdate = cinemaToUpdate.toBuilder()
                     .cinemaName(newCinemaName)
                     .cinemaAddress(newCinemaAddress)
-                    .cinemaTheater(updateCinemaDto.getCinemaTheater())
                     .cinemaParking(updateCinemaDto.isCinemaParking())
                     .build();
 
@@ -137,26 +139,26 @@ public class CinemaServiceImpl implements CinemaService {
         }
     }
 
-    @Override
-    public long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto) throws Exception {
-        Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> CinemaException.cinemaNotFoundException(cinemaId));
-        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> MovieException.movieNotFoundException(movieId));
-
-        TheaterType theaterType = registerMovieTimeDto.getTheaterType();
-        if (!cinema.getCinemaTheater().equals(theaterType)) {
-            // 해당 영화관에 해당 상영관이 없을 때
-            throw CinemaException.invalidTheaterTypeException();
-        }
-
-        MovieTime movieTime = registerMovieTimeDto.toEntity();
-
-        movieTime.setCinema(cinema);
-        movieTime.setMovie(movie);
-
-        MovieTime savedMovieTime = movieTimeRepository.save(movieTime);
-
-        return savedMovieTime.getTimeId();
-    }
+//    @Override
+//    public long registerMovieTime(long cinemaId, long movieId, RegisterMovieTimeDto registerMovieTimeDto) throws Exception {
+//        Screen screen = screenRepository.findById(cinemaId).orElseThrow(() -> CinemaException.cinemaNotFoundException(cinemaId));
+//        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> MovieException.movieNotFoundException(movieId));
+//
+//        ScreenType cinemaScreen = registerMovieTimeDto.getScreenType();
+//        if (!screen.getScreenType().equals(cinemaScreen)) {
+//            // 해당 영화관에 해당 상영관이 없을 때
+//            throw CinemaException.invalidTheaterTypeException();
+//        }
+//
+//        MovieTime movieTime = registerMovieTimeDto.toEntity();
+//
+//        movieTime.setCinema(screen);
+//        movieTime.setMovie(movie);
+//
+//        MovieTime savedMovieTime = movieTimeRepository.save(movieTime);
+//
+//        return savedMovieTime.getTimeId();
+//    }
 
 
 }

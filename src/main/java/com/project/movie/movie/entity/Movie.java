@@ -1,11 +1,14 @@
 package com.project.movie.movie.entity;
 
+import com.project.movie.cinema.entity.MovieTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "movie")
@@ -18,7 +21,6 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
     private Long movieId;
-
     @Column(name = "movie_title", nullable = false)
     private String movieTitle;
 
@@ -46,6 +48,9 @@ public class Movie {
     private String movieReleaseDate;
     @Column(name = "movie_deleted", nullable = false)
     private boolean movieDeleted;
+    // 다대다 관계를 일대다 및 다대일 관계로 나타냅니다.
+    @OneToMany(mappedBy = "movie")
+    private List<MovieTime> movieTimes = new ArrayList<>();
 
     public void markAsDeleted() {
         this.movieDeleted = true;
