@@ -19,20 +19,17 @@ public class Screen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "screen_id")
     private Long screenId;
-
     @ManyToOne
-    @JoinColumn(name = "cinema_id")
-    private Cinema cinema;
-
-    @Column(name = "screen_name", nullable = false)
-    private String name;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "screen_type", nullable = false)
+    @JoinColumn(name = "screen_type_id")
     private ScreenType screenType;
-
+    @Column(name = "screen_name", nullable = false)
+    private String screenName;
     @OneToMany(mappedBy = "screen")
     private List<Seat> seats;
     @OneToMany(mappedBy = "screen")
     private List<MovieTime> movieTimes;
+    @ManyToOne
+    @JoinColumn(name = "cinema_id")
+    private Cinema cinema;
+
 }

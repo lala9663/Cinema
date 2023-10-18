@@ -48,7 +48,6 @@ public class Movie {
     private String movieReleaseDate;
     @Column(name = "movie_deleted", nullable = false)
     private boolean movieDeleted;
-    // 다대다 관계를 일대다 및 다대일 관계로 나타냅니다.
     @OneToMany(mappedBy = "movie")
     private List<MovieTime> movieTimes = new ArrayList<>();
 

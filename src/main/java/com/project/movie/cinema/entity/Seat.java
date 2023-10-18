@@ -26,8 +26,8 @@ public class Seat {
     @Column(name = "seat_number", nullable = false)
     private int seatNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "seat_type", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "seat_Type_id")
     private SeatType seatType;
 
     @Column(name = "purchased")

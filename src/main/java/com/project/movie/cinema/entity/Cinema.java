@@ -31,7 +31,6 @@ public class Cinema {
 
     @OneToMany(mappedBy = "cinema")
     private List<Screen> screens;
-
     public CinemaBuilder toBuilder() {
         return builder()
                 .cinemaId(cinemaId)

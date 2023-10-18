@@ -21,8 +21,11 @@ public class Price {
     private Long priceId;
 
     @ManyToOne
-    @JoinColumn(name = "seat_id", referencedColumnName = "seat_id")
-    private Seat seat;
+    @JoinColumn(name = "seat_type_id")
+    private SeatType seatType;
+    @ManyToOne
+    @JoinColumn(name = "screen_type_id")
+    private ScreenType screenType;
 
     @Column(name = "seat_price", nullable = false)
     private int seatPrice;
