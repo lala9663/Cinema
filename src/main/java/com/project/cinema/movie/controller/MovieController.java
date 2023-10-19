@@ -69,6 +69,27 @@ public class MovieController {
         return ResponseEntity.ok(movies);
     }
 
+    @Operation(summary = "영화 수정 요청", description = "영화가 수정됩니다.", tags = { "Movie Controller" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PutMapping("/{movieId}")
+    public ResponseEntity<String> updateMovie(
+            @PathVariable Long movieId,
+            @Valid @RequestBody UpdateMovieDto updateMovieDto) {
+        try {
+            movieService.updateMovie(movieId, updateMovieDto);
+            return ResponseEntity.ok("성공적으로 수정 되었습니다.");
+        } catch (MovieException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 영화: " + movieId + " 를 찾을 수 없습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정하는데 실패했습니다.");
+        }
+    }
+
     @Operation(summary = "영화 삭제 요청", description = "영화를 삭제합니다.", tags = { "Movie Controller" })
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -87,27 +108,5 @@ public class MovieController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("영화를 삭제 하던 중 오류 발생");
         }
     }
-
-    @Operation(summary = "영화 수정 요청", description = "영화가 수정됩니다.", tags = { "Movie Controller" })
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
-    })
-    @PutMapping("/{movieId}")
-    public ResponseEntity<String> updateMovie(
-            @PathVariable long movieId,
-            @RequestBody UpdateMovieDto updateMovieDto) {
-        try {
-            movieService.updateMovie(movieId, updateMovieDto);
-            return ResponseEntity.ok("성공적으로 삭제 되었습니다.");
-        } catch (MovieException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 영화: " + movieId + " 를 찾을 수 없습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제하는데 실패했습니다.");
-        }
-    }
-
 }
 

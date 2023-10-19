@@ -57,7 +57,20 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void deleteMovie(long movieId) {
+    public long updateMovie(Long movieId, UpdateMovieDto updateMovieDto) {
+        Movie existingMovie = movieRepository.findUnDeletedMovieById(movieId);
+
+        Movie updateMovie = updateMovieDto.toEntity();
+
+        existingMovie.updateFrom(updateMovie);
+
+        movieRepository.save(existingMovie);
+
+        return existingMovie.getMovieId();
+    }
+
+    @Override
+    public void deleteMovie(Long movieId) {
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
         if (movieOptional.isPresent()) {
             Movie movie = movieOptional.get();
@@ -71,23 +84,6 @@ public class MovieServiceImpl implements MovieService {
         } else {
             throw MovieException.movieNotFoundException(movieId);
         }
-    }
-    @Override
-    public long updateMovie(long movieId, UpdateMovieDto updateMovieDto) {
-
-        Movie movieToUpdate = movieRepository.findUnDeletedMovies()
-                .stream()
-                .filter(movie -> movie.getMovieId().equals(movieId))
-                .findFirst()
-                .orElseThrow(() -> MovieException.movieNotFoundException(movieId));
-
-        Movie updatedMovie = updateMovieDto.toEntity();
-
-        movieToUpdate.updateFrom(updatedMovie);
-
-        Movie savedMovie = movieRepository.save(movieToUpdate);
-
-        return savedMovie.getMovieId();
     }
 
 }

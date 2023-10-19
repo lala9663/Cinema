@@ -12,7 +12,7 @@ public interface MovieService {
     long registerMovie(RegisterMovieDto registerMovieDto);
     List<MovieDto> getAllMovies();
     MovieDetailDto getDetailMovieById(Long movieId);
-    void deleteMovie(long id);
-    long updateMovie(long id, UpdateMovieDto updateMovieDto);
+    long updateMovie(Long movieId, UpdateMovieDto updateMovieDto);
+    void deleteMovie(Long movieId);
 }
 

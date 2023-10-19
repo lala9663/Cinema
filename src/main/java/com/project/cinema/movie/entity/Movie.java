@@ -54,30 +54,30 @@ public class Movie {
     public void markAsDeleted() {
         this.movieDeleted = true;
     }
-    public void updateFrom(Movie updateMovieDto) {
-        if (updateMovieDto.getMovieTitle() != null) {
-            this.movieTitle = updateMovieDto.getMovieTitle();
+    public void updateFrom(Movie updateMovie) {
+        if (updateMovie.getMovieTitle() != null) {
+            this.movieTitle = updateMovie.getMovieTitle();
         }
-        if (updateMovieDto.getMovieGenre() != null) {
-            this.movieGenre = updateMovieDto.getMovieGenre();
+        if (updateMovie.getMovieGenre() != null) {
+            this.movieGenre = updateMovie.getMovieGenre();
         }
-        if (updateMovieDto.getMovieRate() != null) {
-            this.movieRate = updateMovieDto.getMovieRate();
+        if (updateMovie.getMovieRate() != null) {
+            this.movieRate = updateMovie.getMovieRate();
         }
-        if (updateMovieDto.getMovieDirector() != null) {
-            this.movieDirector = updateMovieDto.getMovieDirector();
+        if (updateMovie.getMovieDirector() != null) {
+            this.movieDirector = updateMovie.getMovieDirector();
         }
-        if (updateMovieDto.getMovieActor() != null) {
-            this.movieActor = updateMovieDto.getMovieActor();
+        if (updateMovie.getMovieActor() != null) {
+            this.movieActor = updateMovie.getMovieActor();
         }
-        if (updateMovieDto.getMovieRunningTime() != null) {
-            this.movieRunningTime = updateMovieDto.getMovieRunningTime();
+        if (updateMovie.getMovieRunningTime() != null) {
+            this.movieRunningTime = updateMovie.getMovieRunningTime();
         }
-        if (updateMovieDto.getMovieContent() != null) {
-            this.movieContent = updateMovieDto.getMovieContent();
+        if (updateMovie.getMovieContent() != null) {
+            this.movieContent = updateMovie.getMovieContent();
         }
-        if (updateMovieDto.getMovieReleaseDate() != null) {
-            this.movieReleaseDate = updateMovieDto.getMovieReleaseDate();
+        if (updateMovie.getMovieReleaseDate() != null) {
+            this.movieReleaseDate = updateMovie.getMovieReleaseDate();
         }
     }
 }
