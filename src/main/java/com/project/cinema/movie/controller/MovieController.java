@@ -2,6 +2,8 @@ package com.project.cinema.movie.controller;
 
 import com.project.cinema.movie.dto.request.RegisterMovieDto;
 import com.project.cinema.movie.dto.request.UpdateMovieDto;
+import com.project.cinema.movie.dto.response.MovieDetailDto;
+import com.project.cinema.movie.dto.response.MovieDto;
 import com.project.cinema.movie.entity.Movie;
 import com.project.cinema.movie.exception.MovieException;
 import com.project.cinema.movie.service.MovieService;
@@ -49,14 +51,9 @@ public class MovieController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping("/{movieId}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable long movieId) {
-        Movie id = movieService.getMovieById(movieId);
-
-        if (id != null) {
-            return ResponseEntity.ok(id);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<MovieDetailDto> getMovieById(@PathVariable Long movieId) {
+        MovieDetailDto movieDetailDto = movieService.getDetailMovieById(movieId);
+        return ResponseEntity.ok(movieDetailDto);
     }
 
     @Operation(summary = "등록된 영화 조회", description = "영화 목록을 보여줍니다.", tags = { "Movie Controller" })
@@ -66,9 +63,9 @@ public class MovieController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping
-    public ResponseEntity<List<Movie>> getAllMovies() {
-        List<Movie> movies = movieService.getAllMovies();
+    @GetMapping("/list")
+    public ResponseEntity<List<MovieDto>> getAllMovies() {
+        List<MovieDto> movies = movieService.getAllMovies();
         return ResponseEntity.ok(movies);
     }
 
@@ -85,9 +82,9 @@ public class MovieController {
             movieService.deleteMovie(movieId);
             return ResponseEntity.ok("성공적으로 삭제 되었습니다.");
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Movie not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("영화를 찾을 수 없습니다.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the movie");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("영화를 삭제 하던 중 오류 발생");
         }
     }
 
@@ -104,11 +101,11 @@ public class MovieController {
             @RequestBody UpdateMovieDto updateMovieDto) {
         try {
             movieService.updateMovie(movieId, updateMovieDto);
-            return ResponseEntity.ok("Movie updated successfully.");
+            return ResponseEntity.ok("성공적으로 삭제 되었습니다.");
         } catch (MovieException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Movie not found with ID: " + movieId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 영화: " + movieId + " 를 찾을 수 없습니다.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update movie.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제하는데 실패했습니다.");
         }
     }
 

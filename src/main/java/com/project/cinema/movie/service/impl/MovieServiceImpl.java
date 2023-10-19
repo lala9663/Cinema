@@ -2,6 +2,8 @@ package com.project.cinema.movie.service.impl;
 
 import com.project.cinema.movie.dto.request.RegisterMovieDto;
 import com.project.cinema.movie.dto.request.UpdateMovieDto;
+import com.project.cinema.movie.dto.response.MovieDetailDto;
+import com.project.cinema.movie.dto.response.MovieDto;
 import com.project.cinema.movie.entity.Movie;
 import com.project.cinema.movie.exception.MovieException;
 import com.project.cinema.movie.repository.MovieRepository;
@@ -13,6 +15,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,23 +42,18 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    @Transactional
-    public Movie getMovieById(long movieId) {
-        Optional<Movie> movieOptional = movieRepository.findById(movieId);
-        if (movieOptional.isPresent()) {
-            Movie movie = movieOptional.get();
-            if (movie.isMovieDeleted()) {
-                throw MovieException.movieAlreadyDeletedException(movieId);
-            }
-            return movie;
-        } else {
-            throw MovieException.movieNotFoundException(movieId);
-        }
+    public List<MovieDto> getAllMovies() {
+        List<Movie> movies = movieRepository.findUnDeletedMovies();
+        return movies.stream()
+                .map(MovieDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Movie> getAllMovies() {
-        return movieRepository.findUnDeletedMovies();
+    public MovieDetailDto getDetailMovieById(Long movieId) {
+        Movie movie = movieRepository.findUnDeletedMovieById(movieId);
+
+        return MovieDetailDto.fromEntity(movie);
     }
 
     @Override
