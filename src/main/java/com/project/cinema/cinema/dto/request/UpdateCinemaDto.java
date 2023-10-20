@@ -11,7 +11,6 @@ import lombok.ToString;
 public class UpdateCinemaDto {
     private String cinemaName;
     private String cinemaAddress;
-    private String cinemaScreen;
     private boolean cinemaParking;
 
     public Cinema toEntity() {

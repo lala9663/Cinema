@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     boolean existsByCinemaNameAndCinemaAddress(String cinemaName, String cinemaAddress);
 
+    Cinema findByCinemaId(Long cinemaId);
 }

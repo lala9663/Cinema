@@ -34,7 +34,7 @@ public class MovieController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping("/register")
-    public ResponseEntity<?> registerMovie(@RequestBody @Valid RegisterMovieDto registerMovieDto) {
+    public ResponseEntity<String> registerMovie(@RequestBody @Valid RegisterMovieDto registerMovieDto) {
         try {
             long movieId = movieService.registerMovie(registerMovieDto);
             return ResponseEntity.ok("영화가 등록되었습니다. 영화 ID는 " + movieId + " 입니다.");

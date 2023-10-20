@@ -31,12 +31,17 @@ public class Cinema {
 
     @OneToMany(mappedBy = "cinema")
     private List<Screen> screens;
-    public CinemaBuilder toBuilder() {
-        return builder()
-                .cinemaId(cinemaId)
-                .cinemaName(cinemaName)
-                .cinemaAddress(cinemaAddress)
-                .cinemaParking(cinemaParking);
+
+    public void updateForm(Cinema updateCinema) {
+        if (updateCinema.getCinemaName() != null) {
+            this.cinemaName = updateCinema.getCinemaName();
+        }
+        if (updateCinema.getCinemaAddress() != null) {
+            this.cinemaAddress = updateCinema.getCinemaAddress();
+        }
+        if (updateCinema.isCinemaParking()) {
+            this.cinemaParking = true;
+        }
     }
 
 }

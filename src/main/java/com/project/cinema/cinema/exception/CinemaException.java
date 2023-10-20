@@ -28,6 +28,10 @@ public class CinemaException extends RuntimeException {
         return new CinemaException("영화관 생성 중 오류가 발생했습니다. Cinema ID: ");
     }
 
+    public static CinemaException nullFieldException() {
+        return new CinemaException("필드 값을 입력해주세요");
+    }
+
     public static Exception invalidTheaterTypeException() {
         return new CinemaException("해당 영화관에는 존재하지 않습니다.");
     }
